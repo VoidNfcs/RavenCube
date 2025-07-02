@@ -8,6 +8,7 @@ import { connectDB } from "./config/db.js";
 // Routes
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
+import commentRoutes from "./routes/comment.route.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 // === API Routes ===
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 // === Global Error Handler ===
 app.use((err, req, res, next) => {
