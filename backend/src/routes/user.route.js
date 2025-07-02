@@ -5,22 +5,20 @@ import {
   getUserProfile,
   syncUser,
   updateProfile,
-} from "../controllers/user.controller.js";
+} from "../controllers/user.controller..js";
 import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// Public Routes
+// Public routes
 router.get("/profile/:username", getUserProfile);
 
-// Protected Routes
+// Protected routes
 router.use(protectRoute);
 
 router.post("/sync", syncUser);
-router.get("/me", getCurrentUser);
+router.post("/me", getCurrentUser);
 router.put("/profile", updateProfile);
-
-// Follow/unfollow a user
 router.post("/follow/:targetUserId", followUser);
 
 export default router;
