@@ -43,9 +43,14 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(ENV.PORT, () => {
-      console.log(`🚀 Server is running on http://localhost:${ENV.PORT}`);
-    });
+
+    if (ENV.NODE_ENV === "development") {
+      app.listen(ENV.PORT, () => {
+        console.log(
+          `🚀 Server running in ${ENV.NODE_ENV} mode on port ${ENV.PORT}`
+        );
+      });
+    }
   } catch (err) {
     console.error("❌ Database connection failed:", err);
     process.exit(1);
@@ -53,3 +58,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+export default app;
