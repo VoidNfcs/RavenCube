@@ -1,9 +1,19 @@
 import exprress from "express";
-import "dotenv/config";
+import { ENV } from "./config/env.js";
+import { connectDB } from "./config/db.js";
+
+// Database connection
+connectDB();
 
 const app = exprress();
-const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log("Server running");
+app.use(exprress.json());
+app.use(exprress.urlencoded({ extended: true }));
+
+app.use("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(ENV.PORT, () => {
+  console.log("Server running", ENV.PORT, "in", ENV.NODE_ENV, "mode");
 });
