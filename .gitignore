@@ -1,0 +1,12 @@
+node_modules/
+session/
+data/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+prisma/dev.db
+.env
+*.log
+npm-debug.log*
+.DS_Store

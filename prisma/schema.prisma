@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Payment {
+  id           Int       @id @default(autoincrement())
+  invoice      String    @unique
+  amountReq    Int?      @map("amount_req")
+  kodeUnik     Int?      @map("kode_unik")
+  totalBayar   Int?      @map("total_bayar")
+  qrImage      String?   @map("qr_image")
+  expiredIn    Int?      @map("expired_in")
+  status       String    @default("waiting_payment")
+  productId    String?   @map("product_id")
+  qty          Int?
+  refId        String?   @map("ref_id")
+  jid          String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  order        Order?
+
+  @@map("payments")
+}
+
+model Order {
+  id             Int      @id @default(autoincrement())
+  invoice        String   @unique
+  refId          String?  @map("ref_id")
+  productId      String?  @map("product_id")
+  qty            Int?
+  price          Int?
+  status         String   @default("pending")
+  paymentInvoice String?  @unique @map("payment_invoice")
+  jid            String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  payment        Payment? @relation(fields: [paymentInvoice], references: [invoice])
+
+  @@map("orders")
+}
